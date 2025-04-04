@@ -38,12 +38,38 @@
             border-radius: 50%;
             border: 5px solid var(--hot-pink);
             margin: 1rem auto;
-            background-image: url('https://drive.google.com/uc?export=view&id=1AO6baogIu5JAV42Jtq7fHD8BjKLQGY1K');
-            background-size: cover;
-            background-position: center;
+            background: url('https://drive.google.com/uc?export=view&id=1AO6baogIu5JAV42Jtq7fHD8BjKLQGY1K') center/cover;
             box-shadow: 0 0 20px rgba(255, 128, 149, 0.3);
             filter: drop-shadow(0 0 10px rgba(255,128,149,0.5));
             animation: float 3s ease-in-out infinite;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .social-link {
+            font-size: 2.5rem;
+            color: var(--hot-pink);
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .social-link:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .social-link:hover::after {
+            content: '✨';
+            position: absolute;
+            animation: sparkle 1s linear;
+            left: 50%;
+            top: -20px;
         }
 
         .audio-player {
@@ -91,16 +117,46 @@
         .mute-btn:hover {
             transform: scale(1.1);
         }
+
+        h1 {
+            color: var(--hot-pink);
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 0 white;
+            margin: 1rem 0;
+        }
+
+        .bg-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+            background-image: url('data:image/svg+xml,<svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="%23ff8095" d="M10 3.8C8.2 1.2 5.2 0 2.5 0 0 0-1.5 2.8 1 5.5c2.5 2.7 9 8.5 9 8.5s6.5-5.8 9-8.5c2.5-2.7 1-5.5-1.5-5.5-2.7 0-5.7 1.2-7.5 3.8z"/></svg>');
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
     </style>
 </head>
 <body>
+    <div class="bg-hearts"></div>
     <div class="container">
         <div class="profile-pic"></div>
         <h1>Mewffles ✧･ﾟ</h1>
         
         <div class="audio-player">
-            <audio id="bg-music" autoplay loop muted>
-                <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=11_woAYx8tn7j2Qfenq_vozjOSzm9UyjN" type="audio/mpeg">
+            <audio id="bg-music" loop crossorigin="anonymous">
+                <source src="https://drive.google.com/uc?export=download&id=11_woAYx8tn7j2Qfenq_vozjOSzm9UyjN" type="audio/mpeg">
             </audio>
             <div class="controls">
                 <button class="mute-btn" onclick="toggleMute()">🔊</button>
@@ -109,11 +165,32 @@
                 </div>
             </div>
         </div>
+
+        <div class="social-links">
+            <a href="javascript:void(0);" 
+               onclick="navigator.clipboard.writeText('conjoinedpenis'); alert('Discord username copied! 🐾')" 
+               class="social-link">
+                <i class="fa-brands fa-discord"></i>
+            </a>
+            <a href="https://x.com/AdvantageMeowie" class="social-link">
+                <i class="fa-brands fa-twitter"></i>
+            </a>
+            <a href="https://open.spotify.com/user/31getesnjixpfztb2oosjmffxm7i?si=70acca98be5844b4" class="social-link">
+                <i class="fa-brands fa-spotify"></i>
+            </a>
+            <a href="https://www.youtube.com/channel/UCD9wCfXtuN-mdSJ-j8u4oWg" class="social-link">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+            <a href="https://www.tiktok.com/@advantagemeowie" class="social-link">
+                <i class="fa-brands fa-tiktok"></i>
+            </a>
+        </div>
     </div>
 
     <script>
         const audio = document.getElementById('bg-music');
-        let isMuted = true;
+        let isMuted = false;
+        audio.volume = 0.5;
 
         function toggleMute() {
             isMuted = !isMuted;
@@ -132,12 +209,15 @@
             document.getElementById('progress').style.width = `${progress}%`;
         });
 
-        // Allow autoplay with user interaction
-        document.addEventListener('click', function enableAudio() {
-            audio.muted = false;
-            audio.play().catch(() => alert('🎵 Click anywhere to start music!'));
-            document.removeEventListener('click', enableAudio);
+        document.addEventListener('click', function initAudio() {
+            audio.play().catch(error => {
+                alert('🎵 Click anywhere to start music!');
+            });
+            document.removeEventListener('click', initAudio);
         });
+
+        // Mobile hover fix
+        document.addEventListener('touchstart', function() {}, true);
     </script>
 </body>
 </html>
