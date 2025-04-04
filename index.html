@@ -12,14 +12,12 @@
             --text: #59343e;
         }
 
-        /* Fixed font import */
         @import url('https://fonts.googleapis.com/css2?family=Short+Stack&display=swap');
 
         body {
             margin: 0;
             padding: 0;
-            /* Fixed background URL */
-            background: url('https://drive.google.com/file/d/1PHppXi3YiK1XzSGjMFX5CkgN8iA7zxgv/view?usp=sharing') center/cover;
+            background: url('https://drive.google.com/uc?export=view&id=1PHppXi3YiK1XzSGjMFX5CkgN8iA7zxgv') center/cover;
             font-family: 'Short Stack', cursive;
             color: var(--text);
             min-height: 100vh;
@@ -40,9 +38,10 @@
             border-radius: 50%;
             border: 5px solid var(--hot-pink);
             margin: 1rem auto;
-            /* Fixed profile picture URL */
-            background: url('https://drive.google.com/file/d/1AO6baogIu5JAV42Jtq7fHD8BjKLQGY1K/view?usp=sharing') center/cover;
+            background: url('https://drive.google.com/uc?export=view&id=1AO6baogIu5JAV42Jtq7fHD8BjKLQGY1K') center/cover;
             box-shadow: 0 0 20px rgba(255, 128, 149, 0.3);
+            filter: drop-shadow(0 0 10px rgba(255,128,149,0.5));
+            animation: float 3s ease-in-out infinite;
         }
 
         .social-links {
@@ -58,10 +57,19 @@
             color: var(--hot-pink);
             transition: transform 0.3s ease;
             text-decoration: none;
+            position: relative;
         }
 
         .social-link:hover {
             transform: scale(1.2) rotate(10deg);
+        }
+
+        .social-link:hover::after {
+            content: '✨';
+            position: absolute;
+            animation: sparkle 1s linear;
+            left: 50%;
+            top: -20px;
         }
 
         .audio-player {
@@ -73,9 +81,71 @@
             backdrop-filter: blur(5px);
         }
 
-        /* Rest of your CSS remains the same */
-        /* ... (other CSS rules unchanged) ... */
-        
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .seek-bar {
+            width: 100%;
+            height: 5px;
+            background: white;
+            border-radius: 3px;
+            margin: 1rem 0;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: var(--hot-pink);
+            border-radius: 3px;
+        }
+
+        .mute-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .mute-btn:hover {
+            transform: scale(1.1);
+        }
+
+        h1 {
+            color: var(--hot-pink);
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 0 white;
+            margin: 1rem 0;
+        }
+
+        .bg-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+            background-image: url('data:image/svg+xml,<svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="%23ff8095" d="M10 3.8C8.2 1.2 5.2 0 2.5 0 0 0-1.5 2.8 1 5.5c2.5 2.7 9 8.5 9 8.5s6.5-5.8 9-8.5c2.5-2.7 1-5.5-1.5-5.5-2.7 0-5.7 1.2-7.5 3.8z"/></svg>');
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -85,9 +155,8 @@
         <h1>Mewffles ✧･ﾟ</h1>
         
         <div class="audio-player">
-            <!-- Fixed audio URL with CORS fix -->
             <audio id="bg-music" loop crossorigin="anonymous">
-                <source src="https://drive.google.com/file/d/11_woAYx8tn7j2Qfenq_vozjOSzm9UyjN/view?usp=sharing" type="audio/mpeg">
+                <source src="https://drive.google.com/uc?export=download&id=11_woAYx8tn7j2Qfenq_vozjOSzm9UyjN" type="audio/mpeg">
             </audio>
             <div class="controls">
                 <button class="mute-btn" onclick="toggleMute()">🔊</button>
@@ -98,13 +167,11 @@
         </div>
 
         <div class="social-links">
-            <!-- Improved Discord handling -->
             <a href="javascript:void(0);" 
                onclick="navigator.clipboard.writeText('conjoinedpenis'); alert('Discord username copied! 🐾')" 
                class="social-link">
                 <i class="fa-brands fa-discord"></i>
             </a>
-            <!-- Rest of social links unchanged -->
             <a href="https://x.com/AdvantageMeowie" class="social-link">
                 <i class="fa-brands fa-twitter"></i>
             </a>
@@ -125,7 +192,6 @@
         let isMuted = false;
         audio.volume = 0.5;
 
-        // Improved audio handling
         function toggleMute() {
             isMuted = !isMuted;
             audio.muted = isMuted;
@@ -138,20 +204,20 @@
             audio.currentTime = pos * audio.duration;
         }
 
-        // Update progress bar
         audio.addEventListener('timeupdate', () => {
             const progress = (audio.currentTime / audio.duration) * 100;
             document.getElementById('progress').style.width = `${progress}%`;
         });
 
-        // Start music when user interacts
         document.addEventListener('click', function initAudio() {
             audio.play().catch(error => {
-                console.log('Audio play failed:', error);
-                alert('Click anywhere to start music! 🎵');
+                alert('🎵 Click anywhere to start music!');
             });
             document.removeEventListener('click', initAudio);
         });
+
+        // Mobile hover fix
+        document.addEventListener('touchstart', function() {}, true);
     </script>
 </body>
 </html>
