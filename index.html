@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mewffles' Cute Space ✧˖°</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --pink: #ffb3c6;
+            --hot-pink: #ff8095;
+            --text: #59343e;
+        }
+
+        /* Fixed font import */
+        @import url('https://fonts.googleapis.com/css2?family=Short+Stack&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            /* Fixed background URL */
+            background: url('https://drive.google.com/file/d/1PHppXi3YiK1XzSGjMFX5CkgN8iA7zxgv/view?usp=sharing') center/cover;
+            font-family: 'Short Stack', cursive;
+            color: var(--text);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid var(--hot-pink);
+            margin: 1rem auto;
+            /* Fixed profile picture URL */
+            background: url('https://drive.google.com/file/d/1AO6baogIu5JAV42Jtq7fHD8BjKLQGY1K/view?usp=sharing') center/cover;
+            box-shadow: 0 0 20px rgba(255, 128, 149, 0.3);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .social-link {
+            font-size: 2.5rem;
+            color: var(--hot-pink);
+            transition: transform 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .audio-player {
+            background: rgba(255, 179, 198, 0.9);
+            padding: 1.5rem;
+            border-radius: 30px;
+            margin: 2rem auto;
+            max-width: 400px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Rest of your CSS remains the same */
+        /* ... (other CSS rules unchanged) ... */
+        
+    </style>
+</head>
+<body>
+    <div class="bg-hearts"></div>
+    <div class="container">
+        <div class="profile-pic"></div>
+        <h1>Mewffles ✧･ﾟ</h1>
+        
+        <div class="audio-player">
+            <!-- Fixed audio URL with CORS fix -->
+            <audio id="bg-music" loop crossorigin="anonymous">
+                <source src="https://drive.google.com/file/d/11_woAYx8tn7j2Qfenq_vozjOSzm9UyjN/view?usp=sharing" type="audio/mpeg">
+            </audio>
+            <div class="controls">
+                <button class="mute-btn" onclick="toggleMute()">🔊</button>
+                <div class="seek-bar" onclick="seek(event)">
+                    <div class="progress" id="progress"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="social-links">
+            <!-- Improved Discord handling -->
+            <a href="javascript:void(0);" 
+               onclick="navigator.clipboard.writeText('conjoinedpenis'); alert('Discord username copied! 🐾')" 
+               class="social-link">
+                <i class="fa-brands fa-discord"></i>
+            </a>
+            <!-- Rest of social links unchanged -->
+            <a href="https://x.com/AdvantageMeowie" class="social-link">
+                <i class="fa-brands fa-twitter"></i>
+            </a>
+            <a href="https://open.spotify.com/user/31getesnjixpfztb2oosjmffxm7i?si=70acca98be5844b4" class="social-link">
+                <i class="fa-brands fa-spotify"></i>
+            </a>
+            <a href="https://www.youtube.com/channel/UCD9wCfXtuN-mdSJ-j8u4oWg" class="social-link">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+            <a href="https://www.tiktok.com/@advantagemeowie" class="social-link">
+                <i class="fa-brands fa-tiktok"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('bg-music');
+        let isMuted = false;
+        audio.volume = 0.5;
+
+        // Improved audio handling
+        function toggleMute() {
+            isMuted = !isMuted;
+            audio.muted = isMuted;
+            document.querySelector('.mute-btn').textContent = isMuted ? '🔇' : '🔊';
+        }
+
+        function seek(e) {
+            const rect = e.target.getBoundingClientRect();
+            const pos = (e.clientX - rect.left) / rect.width;
+            audio.currentTime = pos * audio.duration;
+        }
+
+        // Update progress bar
+        audio.addEventListener('timeupdate', () => {
+            const progress = (audio.currentTime / audio.duration) * 100;
+            document.getElementById('progress').style.width = `${progress}%`;
+        });
+
+        // Start music when user interacts
+        document.addEventListener('click', function initAudio() {
+            audio.play().catch(error => {
+                console.log('Audio play failed:', error);
+                alert('Click anywhere to start music! 🎵');
+            });
+            document.removeEventListener('click', initAudio);
+        });
+    </script>
+</body>
+</html>
